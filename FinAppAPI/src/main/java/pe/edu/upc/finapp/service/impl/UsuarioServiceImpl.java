@@ -53,5 +53,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioRepo.deleteAll();
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public List<Usuario> fetchByLogin(String usuario, String contraseña) throws Exception {
+		return usuarioRepo.fetchByLogin(usuario, contraseña);
+	}
+
 	
 }

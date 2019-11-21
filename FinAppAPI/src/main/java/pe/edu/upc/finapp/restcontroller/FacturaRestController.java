@@ -103,4 +103,15 @@ public class FacturaRestController {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@ApiOperation("Fetch factura por user id")
+	@GetMapping(value="/usuario/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Factura>> fetchByLogin(@PathVariable("id") Integer id){
+		try {
+			List<Factura> facturas = facturaServ.fetchByUserId(id);
+			return new ResponseEntity<List<Factura>>(facturas,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Factura>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

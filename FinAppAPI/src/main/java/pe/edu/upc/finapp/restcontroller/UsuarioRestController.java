@@ -103,4 +103,19 @@ public class UsuarioRestController {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@ApiOperation("Fetch usuario por login")
+	@GetMapping(value="/{usuario}/{contraseña}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Usuario>> fetchByLogin(@PathVariable("usuario") String usuario, @PathVariable("contraseña") String contraseña){
+		try {
+			List<Usuario> usuarios = usuarioServ.fetchByLogin(usuario, contraseña);
+			if(usuarios.size() > 0)
+				return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
+			else
+				return new ResponseEntity<List<Usuario>>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Usuario>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

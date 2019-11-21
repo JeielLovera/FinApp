@@ -53,4 +53,10 @@ public class FacturaServiceImpl implements FacturaService {
 		facturaRepo.deleteAll();
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public List<Factura> fetchByUserId(Integer id) throws Exception {
+		return facturaRepo.fetchByUserId(id);
+	}
+
 }

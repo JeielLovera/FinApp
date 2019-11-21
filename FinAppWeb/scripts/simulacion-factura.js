@@ -1,4 +1,27 @@
+document.addEventListener("DOMContentLoaded", listar_facturas, false);
 
+function listar_facturas(){
+    var usuario = localStorage.getItem('idUsuario');
+
+    var ruta = 'http://localhost:8085/facturas/usuario/'+usuario;
+    var listar=document.getElementById("lista");
+    //listar.innerHTML='';
+
+    fetch(ruta)
+    .then(res => res.json())
+    .then(fcts => {
+
+        for(let fct of fcts){
+            //CTMCTMCTMCTMCT
+            localStorage.setItem('idFactura',Number(fct.cfactura));
+        }
+    })
+    .catch(function(error)
+    {
+        console.log(error);
+    });
+    console.log(localStorage.getItem('idFactura'));
+}
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
     var nueva_tasa;
