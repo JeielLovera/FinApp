@@ -58,11 +58,11 @@ public class Factoring {
 	@Column(name = "ptasaoriginal")
 	private double ptasaoriginal;
 	
-	@Column(name = "nfrecuenciatasaoriginal")
-	private int nfrecuenciatasaoriginal;
+	@Column(name = "numfrecuenciatasaoriginal")
+	private int numfrecuenciatasaoriginal;
 	
-	@Column(name = "nfrecuenciacapitalizacion")
-	private int nfrecuenciacapitalizacion;
+	@Column(name = "numfrecuenciacapitalizacion")
+	private int numfrecuenciacapitalizacion;
 	
 	@ManyToOne
 	@JoinColumn(name = "ctipointeres", nullable = false)
@@ -170,20 +170,21 @@ public class Factoring {
 		this.ptasaoriginal = ptasaoriginal;
 	}
 
-	public int getNfrecuenciatasaoriginal() {
-		return nfrecuenciatasaoriginal;
+
+	public int getNumfrecuenciatasaoriginal() {
+		return numfrecuenciatasaoriginal;
 	}
 
-	public void setNfrecuenciatasaoriginal(int nfrecuenciatasaoriginal) {
-		this.nfrecuenciatasaoriginal = nfrecuenciatasaoriginal;
+	public void setNumfrecuenciatasaoriginal(int numfrecuenciatasaoriginal) {
+		this.numfrecuenciatasaoriginal = numfrecuenciatasaoriginal;
 	}
 
-	public int getNfrecuenciacapitalizacion() {
-		return nfrecuenciacapitalizacion;
+	public int getNumfrecuenciacapitalizacion() {
+		return numfrecuenciacapitalizacion;
 	}
 
-	public void setNfrecuenciacapitalizacion(int nfrecuenciacapitalizacion) {
-		this.nfrecuenciacapitalizacion = nfrecuenciacapitalizacion;
+	public void setNumfrecuenciacapitalizacion(int numfrecuenciacapitalizacion) {
+		this.numfrecuenciacapitalizacion = numfrecuenciacapitalizacion;
 	}
 
 	public TipoInteres getCtipointeres() {
