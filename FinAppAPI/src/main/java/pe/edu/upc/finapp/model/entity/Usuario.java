@@ -17,38 +17,38 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer cusuario;	
+	private Integer cusuario;	
 	
 	@Column(name = "idLogin", length =100, nullable =false)
 	@NotNull(message = "ingrese id login")
-	String idLogin;
+	private String idLogin;
 	
 	@Column(name = "tcontrasenya", length = 16, nullable=false)
 	@Size(max = 16)
-	String tcontrasenya;
+	private String tcontrasenya;
 	
 	@Column(name = "nusuario", length = 100, nullable = false)
 	@NotNull(message = "ingrese nombre")
-	String nusuario;
+	private String nusuario;
 	
 	@Column(name ="truc", length = 11, nullable = false)
 	@Size(max =11, min = 11)
 	@NotNull(message = "ingrese ruc")
-	String truc;
+	private String truc;
 	
 	@Column(name = "tdni", length = 8, nullable = false)
 	@Size(max =8, min =8 )
 	@NotNull(message = "ingrese dni")
-	String tdni;
+	private String tdni;
 	
 	@Column(name = "tcorreo", length = 40, nullable = false)
 	@NotNull(message = "ingrese correo")
-	String tcorreo;
+	private String tcorreo;
 	
 	@ManyToOne
 	@JoinColumn(name = "ctipousuario", nullable = false)
 	@NotNull(message = "ingrese tipo usuario")
-	TipoUsuario ctipousuario;
+	private TipoUsuario ctipousuario;
 
 	public Integer getCusuario() {
 		return cusuario;

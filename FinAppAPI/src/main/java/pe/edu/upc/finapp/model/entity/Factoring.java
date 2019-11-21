@@ -23,7 +23,10 @@ public class Factoring {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cfactoring;
 	
-	//private Factura cfactura
+	@ManyToOne
+	@JoinColumn(name = "cfactura", nullable = false)
+	@NotNull(message = "Ingrese factura")
+	private Factura cfactura;
 	
 	@NotNull(message = "Ingrese fecha de descuento")
 	@Temporal(TemporalType.DATE)
@@ -66,9 +69,27 @@ public class Factoring {
 	@NotNull(message = "Ingrese tipo interes")
 	private TipoInteres ctipointeres;
 
-	//private CarteraFactura ccarterafactura;
+	@ManyToOne
+	@JoinColumn(name = "ccarterafactura", nullable = true)
+	private CarteraFactura ccarterafactura;
 	
 	
+	public Factura getCfactura() {
+		return cfactura;
+	}
+
+	public void setCfactura(Factura cfactura) {
+		this.cfactura = cfactura;
+	}
+
+	public CarteraFactura getCcarterafactura() {
+		return ccarterafactura;
+	}
+
+	public void setCcarterafactura(CarteraFactura ccarterafactura) {
+		this.ccarterafactura = ccarterafactura;
+	}
+
 	public Integer getCfactoring() {
 		return cfactoring;
 	}
@@ -172,8 +193,5 @@ public class Factoring {
 	public void setCtipointeres(TipoInteres ctipointeres) {
 		this.ctipointeres = ctipointeres;
 	}
-	
-	
-	
-	
+
 }

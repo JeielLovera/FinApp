@@ -20,33 +20,33 @@ public class Factura {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer cfactura;
+	private Integer cfactura;
 	
 	@Column(name = "ntitulofactura", length = 100, nullable = false)
 	@NotNull(message = "ingrese titulo")
-	String ntitulofactura;
+	private String ntitulofactura;
 	
 	@Column(name = "mvalornominal", nullable = false)
-	Double mvalornominal;
+	private Double mvalornominal;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dfirma")
 	@NotNull(message = "ingrese fecha firma")
-	Date dfirma;
+	private Date dfirma;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dvencimiento")
 	@NotNull(message = "ingrese fecha vencimiento")
-	Date dvencimiento;
+	private Date dvencimiento;
 	
 	@ManyToOne
 	@JoinColumn(name = "cusuario", nullable = false)
 	@NotNull(message = "ingrese usuario")
-	Usuario cusuario;
+	private Usuario cusuario;
 	
 	@Column(name = "ttipomoneda", length = 10,nullable = false)
 	@NotNull(message = "ingrese tipo moneda")
-	String ttipomoneda;
+	private String ttipomoneda;
 
 	public Integer getCfactura() {
 		return cfactura;

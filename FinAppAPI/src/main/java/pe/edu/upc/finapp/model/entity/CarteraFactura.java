@@ -14,20 +14,20 @@ public class CarteraFactura {
 
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
-	Integer ccarterafactura;
+	private Integer ccarterafactura;
 	
 	@Column(name = "ncarterafactura", length = 100, nullable = false)
 	@NotEmpty(message="Ingrese nombre")
-	String ncarterafactura;
+	private String ncarterafactura;
 	
 	@Column(name = "mtotarecibido", nullable = false)	
-	Double mtotarecibido;
+	private Double mtotarecibido;
 	
 	@Column(name = "ptotalTcea", nullable = false)	
-	Double ptotalTcea;
+	private Double ptotalTcea;
 	
 	@Column(name = "pTir", nullable = false)	
-	Double pTir;
+	private Double pTir;
 
 	public Integer getCcarterafactura() {
 		return ccarterafactura;

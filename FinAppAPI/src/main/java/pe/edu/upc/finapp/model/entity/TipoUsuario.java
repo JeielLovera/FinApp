@@ -14,11 +14,11 @@ public class TipoUsuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer ctipousuario;
+	private Integer ctipousuario;
 	
 	@Column(name="ntipousuario", length = 40,nullable=false)
 	@NotEmpty(message="ingrese nombre")
-	String ntipousuario;
+	private String ntipousuario;
 
 	public Integer getCtipousuario() {
 		return ctipousuario;
