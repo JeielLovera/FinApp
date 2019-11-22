@@ -8,4 +8,5 @@ public interface FactoringService extends CrudService<Factoring, Integer> {
 
 	List<Factoring>fetchByUserId(Integer id) throws Exception;
 	List<Factoring>fetchByCartera(Integer ccartera) throws Exception;
+	List<Factoring>fecthCarterasByUserId(Integer id) throws Exception;
 }

@@ -57,6 +57,12 @@ public class FactoringServiceImpl implements FactoringService{
 	public List<Factoring> fetchByUserId(Integer id) throws Exception {
 		return factRepo.fetchByUserId(id);
 	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public List<Factoring> fecthCarterasByUserId(Integer id) throws Exception {
+		return factRepo.fecthCarteraByUserId(id);
+	}
 
 	@Override
 	public List<Factoring> fetchByCartera(Integer ccartera) throws Exception {

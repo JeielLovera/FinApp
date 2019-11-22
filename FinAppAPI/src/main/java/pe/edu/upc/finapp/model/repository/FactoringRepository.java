@@ -16,4 +16,6 @@ public interface FactoringRepository extends JpaRepository<Factoring, Integer>{
 	
 	@Query("SELECT f FROM Factoring f  WHERE f.ccarterafactura.ccarterafactura= :ccartera")
 	List<Factoring> fetchByCartera(Integer ccartera);
+	@Query("SELECT f FROM Factoring f, CarteraFactura c, Factura fa WHERE f.ccarterafactura.ccarterafactura = c.ccarterafactura AND fa.cfactura=f.cfactura.cfactura AND fa.cusuario.cusuario=?1" )
+	List<Factoring>fecthCarteraByUserId(Integer id);
 }
