@@ -73,7 +73,18 @@ public class Factoring {
 	@JoinColumn(name = "ccarterafactura", nullable = true)
 	private CarteraFactura ccarterafactura;
 	
+	@NotEmpty(message = "Ingrese titulo factoring")
+	@Column(name = "nfactoring", nullable = false)
+	private String nfactoring;
 	
+	public String getNfactoring() {
+		return nfactoring;
+	}
+
+	public void setNfactoring(String nfactoring) {
+		this.nfactoring = nfactoring;
+	}
+
 	public Factura getCfactura() {
 		return cfactura;
 	}

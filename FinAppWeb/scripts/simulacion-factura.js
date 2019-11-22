@@ -1,11 +1,38 @@
 document.addEventListener("DOMContentLoaded", listar_facturas, false);
 
-function listar_facturas(){
+//VARIABLES GLOBALES-PRINCIPALES
+var tipotasa;
+var ddescuento;
+var td;
+var frec_origin;
+var tasa_origin;
+var frec_capit;
+var gastosinit_id=[];
+var gastosinit_costo=[];
+var gastosfin_id=[];
+var gastosfin_costo=[];
+//VARIABLES GLOBALES-SECUNDARIAS
+var form_costosiniciales;
+var form_idcostos;
+var form_mcostos;
+var cont;
+
+function listar_facturas(){//MAIN
     var usuario = localStorage.getItem('idUsuario');
 
     var ruta = 'http://localhost:8085/facturas/usuario/'+usuario;
     var listar=document.getElementById("lista");
     //listar.innerHTML='';
+
+
+    tipotasa=1;
+    frec_origin=1;
+    frec_capit=1;
+    form_costosiniciales=document.getElementById('form_costosiniciales');
+    //form_costosiniciales.innerHTML='';
+    cont=0;
+
+    agregarCI();
 
     fetch(ruta)
     .then(res => res.json())
@@ -14,13 +41,15 @@ function listar_facturas(){
         for(let fct of fcts){
             //CTMCTMCTMCTMCT
             localStorage.setItem('idFactura',Number(fct.cfactura));
+            localStorage.setItem('dvencimiento',fct.dvencimiento);
+            
         }
-    })
+    }).then(data=>{console.log(localStorage.getItem('dvencimiento'));})///borrarluego
     .catch(function(error)
     {
         console.log(error);
     });
-    console.log(localStorage.getItem('idFactura'));
+    
 }
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
@@ -76,15 +105,39 @@ function calc_tcea(mentregado,mrecibido,td){
 }
 
 function Calcular_Factoring(){
-    var fecha1=moment(fct.cfactura.dfirma);
-    var fecha2=moment(fct.cfactura.dvencimiento);
-    var td=fecha2.diff(fecha1,'days');
+    //var fecha1=moment(fct.cfactura.ddescuento);
+    //var fecha2=moment(fct.cfactura.dvencimiento);
+    //var td=fecha2.diff(fecha1,'days');
     var tetd;
     var pdescuento;
     var mdescuento;
     var mneto;
     var mrecibido;
 
+
+
+    ddescuento=$('#ddescuento').val();
+
+    var fecha1=moment(ddescuento);
+    var fecha2=moment(localStorage.getItem('dvencimiento'));
+    td=Number(fecha2.diff(fecha1,'days'))+1;//el +1 es porque por alguna razon de la bd viene con un dia de retraso gaaaaa
+    tasa_origin=Number(document.getElementById('tasa_origin').value);
+    tasa_origin=Number(tasa_origin.toFixed(7));
+
+    console.log(tipotasa);
+    console.log(ddescuento);
+    console.log(td);
+    console.log(frec_origin);
+    console.log(frec_capit);
+    console.log(tasa_origin);
+
+    /*var selectedtasa=document.getElementById('tipotasa');
+    selectedtasa.addEventListener('change',function(){
+        var tipotasa=this.options[selectedtasa.selectedIndex];
+        console.log(tipotasa.text);
+        console.log("aea");
+    });*/
+/*
     //CALCULO DATOS INTERMEDIOS
     if(fct.ctipointeres.ctipointeres==1){
         tetd=convert_efectiva_efectiva(td,frec_origin,tasa_origin);
@@ -100,6 +153,65 @@ function Calcular_Factoring(){
     mdescuento=calc_valor_descuento(vnominal,pdescuento);
     mdescuento=Number(mdescuento.toFixed(2));
     mneto=calc_valor_neto(vnominal,mdescuento);
-    mrecibido=calc_val_recibido(mneto,mgastosinit);
+    mrecibido=calc_val_recibido(mneto,mgastosinit);*/
 
+}
+
+function setTipoTasa(){
+    var selectedtasa=document.getElementById('tipotasa');
+    tipotasa=Number(selectedtasa.value);
+}
+
+function setFrecOrigin(){
+    var selectedorigin=document.getElementById('frec_origin');
+    frec_origin=Number(selectedorigin.value);
+}
+
+function setFrecCapit(){
+    var selectedcapit=document.getElementById('frec_capit');
+    frec_capit=Number(selectedcapit.value);
+}
+
+function agregarCI(){
+    form_costosiniciales.innerHTML+=`
+    <div class="col-md-8" >
+        <select class="form-control" id="idcosto${cont}" onchange="setIDs()">
+            <option value="" disable selected>Gastos Iniciales</option>
+            <option value="1">Portes</option>
+            <option value="2">Fotocopias</option>
+            <option value="3">Comisión de estudio</option>
+            <option value="4">Comisión de intermediación</option>
+            <option value="5">Gastos de administración</option>
+            <option value="6">Gastos notariales</option>
+            <option value="7">Seguro</option>
+            <option value="8">Otros gastos</option> 
+        </select>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" id="mcosto${cont}" placeholder="Valor en efectivo" style="height: 38px;">
+        </div>
+    </div>
+    `;
+    cont++;
+}
+
+function setCI(){
+    for(var i=0;i<cont;i++){
+        var tempcosto=Number(document.getElementById('mcosto'+String(i)).value);
+        gastosinit_costo.push(Number(tempcosto.toFixed(2)));
+    }
+    var btn=document.getElementById('rg');
+    btn.disabled=true;
+    btn=document.getElementById('agr');
+    btn.disabled=true;
+
+    console.log(gastosinit_costo);
+    console.log(gastosinit_id);
+    /*var id=document.getElementById('idcosto'+String(e));
+    gastosinit_id.push(id.value);*/
+}
+
+function setIDs(){
+    
 }

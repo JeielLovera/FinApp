@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <select class="form-control " id=tipotasa>
+                                            <select class="form-control " id=tipotasa onchange="setTipoTasa()">
                                                 <option value="1">Efectiva</option>
                                                 <option value="2">Nominal</option>
                                             </select>
@@ -200,7 +200,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <select class="form-control " id=frecuencia>
+                                            <select class="form-control " id=frec_origin onchange="setFrecOrigin()">
                                                 <option value="1">Diario</option>
                                                 <option value="15">Quincenal</option>
                                                 <option value="30">Mensual</option>
@@ -222,7 +222,7 @@
                                         <div class="col-md-5">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="" placeholder="Porcentaje"
-                                                    style="height: 38px;" id=tasaoriginal>    
+                                                    style="height: 38px;" id=tasa_origin>    
                                                 <div class=" input-group-postpend">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -238,7 +238,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <select class="form-control " id=capitalizacion>
+                                            <select class="form-control " id="frec_capit" onchange="setFrecCapit()">
                                                 <option value="1">Diario</option>
                                                 <option value="15">Quincenal</option>
                                                 <option value="30">Mensual</option>
@@ -252,29 +252,17 @@
                                     </div>
                                         
                                     <!--COSTOS INICALES-->
-                                    <h2 class="card-inside-title" style="font-size:130%; color:#04BE5B;">Costos o Gastos inciales</h2>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <select class="form-control ">
-                                                <option value="">Portes</option>
-                                                <option value="">Fotocopias</option>
-                                                <option value="">Comisión de estudio</option>
-                                                <option value="">Comisión de intermediación</option>
-                                                <option value="">Gastos de administración</option>
-                                                <option value="">Gastos notariales</option>
-                                                <option value="">Seguro</option>
-                                                <option value="">Otros gastos</option> 
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="" placeholder="Valor en efectivo" style="height: 38px;">
-                                            </div>
-                                        </div>
+                                    <h2 class="card-inside-title" style="font-size:130%; color:#04BE5B;" >Costos o Gastos inciales</h2>
+                                    <div class="row" id="form_costosiniciales">
+                                                                            
                                     </div>
+                                    
                                     <div class="row justify-content-end">
                                         <div class="col-md-3">
-                                            <button type="button" class="subscribe btn btn-dark btn-block" onclick="">Agregar</button>
+                                            <button type="button" id="rg" class="subscribe btn btn-dark btn-block" onclick="setCI()">Registrar</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" id="agr" class="subscribe btn btn-dark btn-block" onclick="agregarCI()">Agregar</button>
                                         </div>
                                     </div>
 
@@ -283,9 +271,9 @@
                                     <div class="row">
                                         <div class="col-md-8">
                                             <select class="form-control ">
-                                                <option value="">Portes</option>                                                
-                                                <option value="">Gastos de administración</option>
-                                                <option value="">Otros gastos</option>                                                
+                                                <option value="1">Portes</option>                                                
+                                                <option value="5">Gastos de administración</option>
+                                                <option value="8">Otros gastos</option>                                                
                                             </select>
                                         </div>
                                         <div class="col-md-4">
@@ -310,7 +298,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-4">
                                             <button type="button" class="subscribe btn btn-success btn-block"
-                                                onclick="">SIMULAR</button>
+                                                onclick="Calcular_Factoring()">SIMULAR</button>
                                         </div>                                        
                                     </div>                                    
                                     
