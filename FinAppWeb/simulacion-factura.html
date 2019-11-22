@@ -93,7 +93,7 @@
                         <div class="detail">
                             <h4>
                                 <script type="text/javascript">
-                                    
+                                    document.write(usuario);
                                 </script>
                             </h4>
                         </div>
@@ -296,7 +296,7 @@
                                             <div class="col-md-4">
                                                 <label>Descuento</label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" id="divdescuento">
                                                 <p align="left">$descuento</p>
                                             </div>
                                         </div>
@@ -304,7 +304,7 @@
                                             <div class="col-md-4">
                                                 <label>Valor Neto</label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" id="divneto">
                                                 <p align="left">$valorneto</p>
                                             </div>
                                         </div>
@@ -312,7 +312,7 @@
                                             <div class="col-md-4">
                                                 <label>Valor Recibido</label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" id="divrecibido">
                                                 <p align="left">$valor recibido</p>
                                             </div>
                                         </div>
@@ -320,7 +320,7 @@
                                             <div class="col-md-4">
                                                 <label>Valor Entregado</label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" id="diventregado">
                                                 <p align="left">$valor entregado</p>
                                             </div>
                                         </div>
@@ -328,7 +328,7 @@
                                             <div class="col-md-4">
                                                 <label>TCEA</label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" id="divtcea">
                                                 <p align="left">tcea%</p>
                                             </div>
                                         </div>
@@ -339,7 +339,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="" placeholder="Título de la simulación" style="height: 38px;">
+                                                <input type="text" class="form-control" id="titulofactoring" placeholder="Título de la simulación" style="height: 38px;">
                                             </div>
                                         </div>
 
@@ -347,7 +347,7 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <button type="button" class="subscribe btn btn-success btn-block"
-                                                    onclick="">GUARDAR SIMULACIÓN</button>
+                                                    onclick="registrar_factoring()">GUARDAR SIMULACIÓN</button>
                                             </div>   
                                             <div class="col-md-4">
                                                 <button onclick="" class="subscribe btn btn-danger btn-block" type="button">CANCELAR</button>

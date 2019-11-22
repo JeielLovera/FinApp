@@ -65,6 +65,7 @@ function main(){//MAIN
         localStorage.setItem('idFactura',Number(fct.cfactura));
         localStorage.setItem('dvencimiento',fct.dvencimiento);
         localStorage.setItem('vnominal',Number(fct.mvalornominal));
+        localStorage.setItem('moneda',fct.ttipomoneda);
         var titulo=document.getElementById('titulofactura');
         titulo.innerHTML='';
         titulo.innerHTML+=`<label for="">${fct.ntitulofactura}</label>`;  
@@ -199,6 +200,22 @@ function Calcular_Factoring(){
     console.log(mentregado);
     console.log(tcea);
 
+    var divdescuento=document.getElementById('divdescuento');
+    divdescuento.innerHTML='';
+    divdescuento.innerHTML+=`<p align="left">${mdescuento} ${localStorage.getItem('moneda')}</p>`;
+    var divneto=document.getElementById('divneto');
+    divneto.innerHTML='';
+    divneto.innerHTML+=`<p align="left">${mneto} ${localStorage.getItem('moneda')}</p>`;
+    var divrecibido=document.getElementById('divrecibido');
+    divrecibido.innerHTML='';
+    divrecibido.innerHTML+=`<p align="left">${mrecibido} ${localStorage.getItem('moneda')}</p>`;
+    var diventregado=document.getElementById('diventregado');
+    diventregado.innerHTML='';
+    diventregado.innerHTML+=`<p align="left">${mentregado} ${localStorage.getItem('moneda')}</p>`;
+    var divtcea=document.getElementById('divtcea');
+    divtcea.innerHTML='';
+    divtcea.innerHTML+=`<p align="left">${tcea} %</p>`;
+
     limpiar_datos();
 
 }
@@ -313,37 +330,9 @@ function setIDFs(e){
 function limpiar_datos(){
     form_costosiniciales.innerHTML='';
     form_costosfinales.innerHTML='';
+}
 
-    for(var i=0;i<cont;i++){
-        //gastosinit_costo.pop();
-        gastosinit_id.pop();
-    }
-    for(var i=0;i<cont;i++){
-        gastosinit_costo.pop();
-        //gastosinit_id.pop();
-    }
-    for(var j=0;j<cont2;j++){
-        //gastosfin_costo.pop();
-        gastosfin_id.pop();
-    }
-    for(var j=0;j<cont2;j++){
-        gastosfin_costo.pop();
-        //gastosfin_id.pop();
-    }
-
-    /*gastosinit_costo=[];
-    gastosinit_id=[];
-    gastosfin_costo=[]
-    gastosfin_id=[];*/
-
-
-
-    var btn=document.getElementById('rg');
-    btn.disabled=false;
-    btn=document.getElementById('agr');
-    btn.disabled=false;
-    var btn=document.getElementById('rg2');
-    btn.disabled=false;
-    btn=document.getElementById('agr2');
-    btn.disabled=false;
+function registrar_factoring(){
+    var titulofactoring=document.getElementById('titulofactoring').value;
+    
 }
