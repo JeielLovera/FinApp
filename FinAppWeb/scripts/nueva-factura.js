@@ -1,4 +1,19 @@
+document.addEventListener("DOMContentLoaded", inicializar, false);
 
+function inicializar() {
+    valoresPredeterminados();
+}
+
+function valoresPredeterminados() {
+    var ffirma = document.getElementById('ffirma');
+    var fechaHoy = new Date();
+
+    var anio = fechaHoy.toLocaleString().split(' ')[0].split('/')[2];
+    var mes = fechaHoy.toLocaleString().split(' ')[0].split('/')[1];
+    var dia = fechaHoy.toLocaleString().split(' ')[0].split('/')[0];
+
+    ffirma.value = anio+'-'+mes+'-'+dia;
+}
 
 function insertarFactura() {
     var titulo = document.getElementById('titulo').value;
@@ -9,12 +24,6 @@ function insertarFactura() {
     var cusuario = Number(localStorage.getItem('idUsuario'));
 
     var rutaPOSTFactura = 'http://localhost:8085/facturas';
-
-    console.log(titulo);
-    console.log(ffirma);
-    console.log(fvencimiento);
-    console.log(mfacturado);
-    console.log(tipomoneda);
 
     axios({
         method:'post',

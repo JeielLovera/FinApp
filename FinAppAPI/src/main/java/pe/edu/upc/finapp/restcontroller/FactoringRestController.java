@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import pe.edu.upc.finapp.model.entity.Factoring;
+import pe.edu.upc.finapp.model.entity.Factura;
 import pe.edu.upc.finapp.service.FactoringService;
 
 @RestController
@@ -122,6 +123,28 @@ public class FactoringRestController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation("Fetch factoring por user id")
+	@GetMapping(value="/usuario/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Factoring>> fecthByLoginId(@PathVariable("id") Integer id){
+		try {
+			List<Factoring> factorings = fctServ.fetchByUserId(id);
+			return new ResponseEntity<List<Factoring>>(factorings,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Factoring>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ApiOperation("Fetch carteras por user id")
+	@GetMapping(value="/cartera/usuario/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Factoring>> fecthByCarteraId(@PathVariable("id") Integer id){
+		try {
+			List<Factoring> factorings = fctServ.fecthCarterasByUserId(id);
+			return new ResponseEntity<List<Factoring>>(factorings,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Factoring>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
