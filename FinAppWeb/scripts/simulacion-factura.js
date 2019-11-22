@@ -56,8 +56,6 @@ function main(){//MAIN
     mgastosfinales=0;
     tcea=0;
 
-    //agregarCI();
-    //agregarCF();
 
     fetch(ruta)
     .then(res => res.json())
@@ -154,20 +152,10 @@ function Calcular_Factoring(){
 
     var fecha1=moment(ddescuento);
     var fecha2=moment(localStorage.getItem('dvencimiento'));
-    td=Number(fecha2.diff(fecha1,'days'))+1;//el +1 es porque por alguna razon de la bd viene con un dia de retraso gaaaaa
+    td=Number(fecha2.diff(fecha1,'days'))+1;//el +1 es porque por alguna razon de la bd viene con un dia de retraso 
     tasa_origin=Number(document.getElementById('tasa_origin').value);
     tasa_origin=Number(tasa_origin.toFixed(7));
 
-    console.log(tipotasa);
-    console.log(ddescuento);
-    console.log(td);
-    console.log(frec_origin);
-    console.log(frec_capit);
-    console.log(tasa_origin);
-    console.log(gastosinit_id);
-    console.log(gastosinit_costo);
-    console.log(gastosfin_id);
-    console.log(gastosfin_costo);
 
     //CALCULO DATOS INTERMEDIOS
     if(tipotasa==1){
@@ -199,16 +187,7 @@ function Calcular_Factoring(){
     tcea=calc_tcea(mentregado,mrecibido,td);
     tcea=Number(tcea.toFixed(7));
 
-    console.log("calculos desde aqui");
-    console.log("cont",cont);
-    console.log("cont2",cont2);
-    console.log(tetd);
-    console.log(pdescuento);
-    console.log(mdescuento);
-    console.log(mneto);
-    console.log(mrecibido);
-    console.log(mentregado);
-    console.log(tcea);
+
 
     var divdescuento=document.getElementById('divdescuento');
     divdescuento.innerHTML='';

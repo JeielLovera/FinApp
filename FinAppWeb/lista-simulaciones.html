@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-<title>Facturas</title>
+<title>Lista Simulaciones</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <!-- Favicon-->
 <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
@@ -18,7 +18,7 @@
 <link  rel="stylesheet" href="assets/css/style.min.css">
 <!-- Scripts-->
 <script>
-    var cliente = localStorage.getItem("nombreCliente");
+    var usuario = localStorage.getItem("nombreUsuario");
 </script>
 </head>
 
@@ -42,34 +42,6 @@
             <a href="javascript:void(0);" class="dropdown-toggle" title="App" data-toggle="dropdown" role="button"><i class="zmdi zmdi-apps"></i></a>
             <ul class="dropdown-menu slideUp2">
                 <li class="header">App Shortcut</li>
-                <li class="body">
-                    <ul class="menu app_sortcut list-unstyled">
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="icon-circle mb-2 bg-green"><i class="zmdi zmdi-calendar"></i></div>
-                                <p class="mb-0">Calendario</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index.html">
-                                <div class="icon-circle mb-2 bg-purple"><i class="zmdi zmdi-account-calendar"></i></div>
-                                <p class="mb-0">Contratos</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="icon-circle mb-2 bg-red"><i class="zmdi zmdi-tag"></i></div>
-                                <p class="mb-0">Novedades</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="enfermeros-list.html">
-                                <div class="icon-circle mb-2 bg-blue"><i class="zmdi zmdi-account"></i></div>
-                                <p class="mb-0">Enfermeros</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </li>
         <li><a href="javascript:void(0);" class="js-right-sidebar" title="Setting"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
@@ -91,7 +63,7 @@
                     <div class="detail">
                         <h4>
                             <script type="text/javascript">
-                                document.write(cliente);
+                                document.write(usuario);
                             </script>
                         </h4>
                     </div>
@@ -107,7 +79,6 @@
                 </a>
             
                 <ul class="ml-menu" style="display: block;">
-                    <li><a href="simulacion-factura.html" class=" waves-effect waves-block">Una Factura</a></li>
                     <li><a href="simulacion-cartera.html" class=" waves-effect waves-block">Cartera de Facturas</a></li>
                 </ul>
             </li>
