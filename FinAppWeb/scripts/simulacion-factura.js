@@ -34,6 +34,7 @@ var auxcont2;
 function main(){//MAIN
 
     var ruta='http://localhost:8085/facturas/'+localStorage.getItem('seleccionFactura');
+    var seccionCapitalizacion = document.getElementById('seccionCapitalizacion');
 
     tipotasa=1;
     frec_origin=1;
@@ -73,7 +74,17 @@ function main(){//MAIN
     {
         console.log(error);
     });
-    
+
+    var fdescuentoCartera = document.getElementById('ddescuento');
+    var fechaHoy = new Date();
+
+    var anio = fechaHoy.toLocaleString().split(' ')[0].split('/')[2];
+    var mes = fechaHoy.toLocaleString().split(' ')[0].split('/')[1];
+    var dia = fechaHoy.toLocaleString().split(' ')[0].split('/')[0];
+
+    fdescuentoCartera.value = anio+'-'+mes+'-'+dia;
+
+    seccionCapitalizacion.hidden = true;
 }
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
@@ -420,3 +431,19 @@ function registrar_factoring(){
 function cancelar(){
     window.location="./lista-facturas.html";
 }
+
+//Variables globales para los listener
+var tipoTasa = document.getElementById('tipotasa');
+var seccionCapitalizacion = document.getElementById('seccionCapitalizacion');
+
+//LISTENER POR SI CAMBIA EL TIPO DE TASA
+tipoTasa.addEventListener('change', (e) => {
+    if(tipoTasa.value == 1)
+    {
+        seccionCapitalizacion.hidden = true;
+    }
+    else
+    {
+        seccionCapitalizacion.hidden = false;
+    }
+})
