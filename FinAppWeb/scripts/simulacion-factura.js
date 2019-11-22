@@ -33,8 +33,7 @@ var auxcont2;
 
 function main(){//MAIN
 
-    localStorage.setItem('idFactura',Number(3));
-    var ruta='http://localhost:8085/facturas/'+localStorage.getItem('idFactura');
+    var ruta='http://localhost:8085/facturas/'+localStorage.getItem('seleccionFactura');
 
     tipotasa=1;
     frec_origin=1;
@@ -162,6 +161,7 @@ function Calcular_Factoring(){
     //CALCULO DATOS INTERMEDIOS
     if(tipotasa==1){
         tetd=convert_efectiva_efectiva(td,frec_origin,tasa_origin);
+        frec_capit=-1;
     }
     else{
         tetd=convert_nominal_efectiva(td,frec_origin,tasa_origin,frec_capit);
@@ -196,7 +196,6 @@ function Calcular_Factoring(){
     console.log(mdescuento);
     console.log(mneto);
     console.log(mrecibido);
-    console.log(mgastosfinales);
     console.log(mentregado);
     console.log(tcea);
 
@@ -334,5 +333,90 @@ function limpiar_datos(){
 
 function registrar_factoring(){
     var titulofactoring=document.getElementById('titulofactoring').value;
-    
+    var tbanco=document.getElementById('tbanco').value;
+    var ruta='http://localhost:8085/factorings';
+
+    axios({
+        method:'POST',
+        url:ruta,
+        data:{
+            ccartera_factura: null,
+            cfactura:{
+                cfactura: Number(localStorage.getItem('idFactura'))
+            } ,
+            ctipointeres:{
+                ctipointeres: Number(tipotasa)
+            },
+            ddescuento: ddescuento,
+            mdescuento: Number(mdescuento),
+            mentregado: Number(mentregado),
+            mneto: Number(mneto),
+            mrecibido: Number(mrecibido),
+            nfactoring: titulofactoring,
+            numfrecuenciacapitalizacion: Number(frec_capit),
+            numfrecuenciatasaoriginal: Number(frec_origin),
+            pdescuento: Number(pdescuento),
+            ptasaoriginal: Number(tasa_origin),
+            ptcea: Number(tcea),
+            tbanco: tbanco
+        }
+    })
+    .then(data => {
+        var fct=[];
+        var ruta2='http://localhost:8085/factorings';
+        axios.get(ruta2)
+        .then(data => {
+            for(var i=0;i<cont;i++){
+                var ruta3='http://localhost:8085/gasto_factorings';
+                fct=data.data[data.data.length-1];
+                axios({
+                    method:'POST',
+                    url: ruta3,
+                    data:{
+                        cfactoring:fct,
+                        cgasto:{
+                            cgasto:Number(gastosinit_id[i])
+                        },
+                        ftipogasto: true,
+                        mgasto: Number(gastosinit_costo[i])
+                    }
+                }).then(data => {}).catch(function(error){console.log(error);});
+            }
+        })
+        .catch(function(error){console.log(error);});
+    })
+    .then(data => {
+        var fct=[];
+        var ruta2='http://localhost:8085/factorings';
+        axios.get(ruta2)
+        .then(data => {
+            for(var i=0;i<cont2;i++){
+                var ruta3='http://localhost:8085/gasto_factorings';
+                fct=data.data[data.data.length-1];
+                axios({
+                    method:'POST',
+                    url: ruta3,
+                    data:{
+                        cfactoring:fct,
+                        cgasto:{
+                            cgasto:Number(gastosfin_id[i])
+                        },
+                        ftipogasto: false,
+                        mgasto: Number(gastosfin_costo[i])
+                    }
+                }).then(data => { }).catch(function(error){console.log(error);});
+            }
+        })
+        .catch(function(error){console.log(error);});
+    })
+    .then(data => {
+    })
+    .catch(function(error){console.log(error);});
+
+    window.location="./lista-facturas.html";
+
+}
+
+function cancelar(){
+    window.location="./lista-facturas.html";
 }
