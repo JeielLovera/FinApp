@@ -235,7 +235,7 @@ function setFrecCapit(){
 }
 
 function agregarCI(){
-    form_costosiniciales.innerHTML+=`
+    form_costosiniciales.insertAdjacentHTML("beforeend", `
     <div class="col-md-8" >
         <select class="form-control" id="idcosto${cont}" onchange="setIDs(${cont})">
             <option value="" disabled selected>Gastos Iniciales</option>
@@ -254,13 +254,13 @@ function agregarCI(){
             <input type="text" class="form-control" id="mcosto${cont}" placeholder="Valor en efectivo" style="height: 38px;">
         </div>
     </div>
-    `;
+    `);
     cont++;
     auxcont++;
 }
 
 function agregarCF(){
-    form_costosfinales.innerHTML+=`
+    form_costosfinales.insertAdjacentHTML("beforeend", `
     <div class="col-md-8">
         <select class="form-control" id="idcostof${cont2}" onchange="setIDFs(${cont2})">
             <option value="" disabled selected>Gastos Finales</option>
@@ -274,7 +274,7 @@ function agregarCF(){
             <input type="text" class="form-control" id="mcostof${cont2}" placeholder="Valor en efectivo" style="height: 38px;">
         </div>
     </div>
-    `;
+    `);
     cont2++;
     auxcont2++;
 }
