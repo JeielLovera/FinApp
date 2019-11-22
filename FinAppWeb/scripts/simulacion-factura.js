@@ -11,6 +11,7 @@ var gastosinit_id=[];
 var gastosinit_costo=[];
 var gastosfin_id=[];
 var gastosfin_costo=[];
+<<<<<<< HEAD
 var tetd;
 var pdescuento;
 var mdescuento;
@@ -21,6 +22,9 @@ var mgastosiniciales;
 var mgastosfinales;
 var tcea;
 
+=======
+var listaFacts=[];
+>>>>>>> bd44d3b004205686c05871ec36621265b9c88fc8
 //VARIABLES GLOBALES-SECUNDARIAS
 var form_costosiniciales;
 var form_costosfinales;
@@ -31,11 +35,19 @@ var auxcont;
 var cont2;
 var auxcont2;
 
+<<<<<<< HEAD
 function main(){//MAIN
 
     localStorage.setItem('idFactura',Number(3));
     var ruta='http://localhost:8085/facturas/'+localStorage.getItem('idFactura');
 
+=======
+function listar_facturas(){//MAIN
+    var usuario = localStorage.getItem('idUsuario');
+
+    var ruta = 'http://localhost:8085/facturas/usuario/'+usuario;
+    
+>>>>>>> bd44d3b004205686c05871ec36621265b9c88fc8
     tipotasa=1;
     frec_origin=1;
     frec_capit=1;
@@ -61,16 +73,33 @@ function main(){//MAIN
 
     fetch(ruta)
     .then(res => res.json())
+<<<<<<< HEAD
     .then(fct => {
         localStorage.setItem('idFactura',Number(fct.cfactura));
         localStorage.setItem('dvencimiento',fct.dvencimiento);
         localStorage.setItem('vnominal',Number(fct.mvalornominal));   
+=======
+    .then(fcts => {
+        listaFacts = fcts;
+>>>>>>> bd44d3b004205686c05871ec36621265b9c88fc8
     })
     .catch(function(error)
     {
         console.log(error);
     });
     
+}
+
+function mostrarFacturas() {
+    var listar = document.getElementById("lista");
+    listar.innerHTML = '';
+
+    for(let fct of listaFacts){
+        listar.innerHTML += `
+        <option value="${fct.cfactura}">${fct.ntitulofactura}</option>`;
+        localStorage.setItem('idFactura',Number(fct.cfactura));
+        localStorage.setItem('dvencimiento',fct.dvencimiento);
+    }
 }
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
