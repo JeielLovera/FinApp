@@ -44,6 +44,17 @@ public class FactoringRestController {
 		}
 	}
 	
+	@ApiOperation("Fetch factoring por cartera id")
+	@GetMapping(value="/cartera/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Factoring>> fetchByCart(@PathVariable("id") Integer id){
+		try {
+			List<Factoring> factorings = fctServ.fetchByCartera(id);
+			return new ResponseEntity<List<Factoring>>(factorings,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<List<Factoring>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@ApiOperation("Save factoring")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<Object> save(@Valid @RequestBody Factoring factoring){

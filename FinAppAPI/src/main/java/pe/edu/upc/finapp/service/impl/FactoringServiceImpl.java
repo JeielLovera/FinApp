@@ -58,4 +58,9 @@ public class FactoringServiceImpl implements FactoringService{
 		return factRepo.fetchByUserId(id);
 	}
 
+	@Override
+	public List<Factoring> fetchByCartera(Integer ccartera) throws Exception {
+		return factRepo.fetchByCartera(ccartera);
+	}
+
 }
