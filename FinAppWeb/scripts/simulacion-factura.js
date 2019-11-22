@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", main, false);
-
+//aea
 //VARIABLES GLOBALES-PRINCIPALES
 var tipotasa;
 var ddescuento;
