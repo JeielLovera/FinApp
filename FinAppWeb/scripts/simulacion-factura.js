@@ -315,18 +315,26 @@ function limpiar_datos(){
     form_costosfinales.innerHTML='';
 
     for(var i=0;i<cont;i++){
-        gastosinit_costo.pop();
+        //gastosinit_costo.pop();
         gastosinit_id.pop();
+    }
+    for(var i=0;i<cont;i++){
+        gastosinit_costo.pop();
+        //gastosinit_id.pop();
+    }
+    for(var j=0;j<cont2;j++){
+        //gastosfin_costo.pop();
+        gastosfin_id.pop();
     }
     for(var j=0;j<cont2;j++){
         gastosfin_costo.pop();
-        gastosfin_id.pop();
+        //gastosfin_id.pop();
     }
 
-    gastosinit_costo=[];
+    /*gastosinit_costo=[];
     gastosinit_id=[];
     gastosfin_costo=[]
-    gastosfin_id=[];
+    gastosfin_id=[];*/
 
 
 
