@@ -20,7 +20,6 @@ var mentregado;
 var mgastosiniciales;
 var mgastosfinales;
 var tcea;
-var listaFacts=[];
 
 //VARIABLES GLOBALES-SECUNDARIAS
 var form_costosiniciales;
@@ -59,7 +58,6 @@ function main(){//MAIN
 
     agregarCI();
     agregarCF();
-    mostrarFacturas();
 
     fetch(ruta)
     .then(res => res.json())
@@ -73,18 +71,6 @@ function main(){//MAIN
         console.log(error);
     });
     
-}
-
-function mostrarFacturas() {
-    var listar = document.getElementById("lista");
-    listar.innerHTML = '';
-
-    for(let fct of listaFacts){
-        listar.innerHTML += `
-        <option value="${fct.cfactura}">${fct.ntitulofactura}</option>`;
-        localStorage.setItem('idFactura',Number(fct.cfactura));
-        localStorage.setItem('dvencimiento',fct.dvencimiento);
-    }
 }
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
