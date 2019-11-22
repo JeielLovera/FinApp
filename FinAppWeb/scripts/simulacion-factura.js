@@ -56,15 +56,18 @@ function main(){//MAIN
     mgastosfinales=0;
     tcea=0;
 
-    agregarCI();
-    agregarCF();
+    //agregarCI();
+    //agregarCF();
 
     fetch(ruta)
     .then(res => res.json())
     .then(fct => {
         localStorage.setItem('idFactura',Number(fct.cfactura));
         localStorage.setItem('dvencimiento',fct.dvencimiento);
-        localStorage.setItem('vnominal',Number(fct.mvalornominal));   
+        localStorage.setItem('vnominal',Number(fct.mvalornominal));
+        var titulo=document.getElementById('titulofactura');
+        titulo.innerHTML='';
+        titulo.innerHTML+=`<label for="">${fct.ntitulofactura}</label>`;  
     })
     .catch(function(error)
     {
@@ -135,7 +138,7 @@ function Calcular_Factoring(){
     mgastosiniciales=0;
     mgastosfinales=0;
     tcea=0;
-
+    
     ddescuento=$('#ddescuento').val();
 
     var fecha1=moment(ddescuento);
@@ -192,12 +195,11 @@ function Calcular_Factoring(){
     console.log(mdescuento);
     console.log(mneto);
     console.log(mrecibido);
-    //console.log(mgastosfinales);
+    console.log(mgastosfinales);
     console.log(mentregado);
     console.log(tcea);
 
-
-
+    limpiar_datos();
 
 }
 
@@ -306,4 +308,42 @@ function setIDFs(e){
         var selectid2=document.getElementById('idcostof'+String(e));
         gastosfin_id[Number(e)]=Number(selectid2.value);
     }  
+}
+
+function limpiar_datos(){
+    form_costosiniciales.innerHTML='';
+    form_costosfinales.innerHTML='';
+
+    for(var i=0;i<cont;i++){
+        //gastosinit_costo.pop();
+        gastosinit_id.pop();
+    }
+    for(var i=0;i<cont;i++){
+        gastosinit_costo.pop();
+        //gastosinit_id.pop();
+    }
+    for(var j=0;j<cont2;j++){
+        //gastosfin_costo.pop();
+        gastosfin_id.pop();
+    }
+    for(var j=0;j<cont2;j++){
+        gastosfin_costo.pop();
+        //gastosfin_id.pop();
+    }
+
+    /*gastosinit_costo=[];
+    gastosinit_id=[];
+    gastosfin_costo=[]
+    gastosfin_id=[];*/
+
+
+
+    var btn=document.getElementById('rg');
+    btn.disabled=false;
+    btn=document.getElementById('agr');
+    btn.disabled=false;
+    var btn=document.getElementById('rg2');
+    btn.disabled=false;
+    btn=document.getElementById('agr2');
+    btn.disabled=false;
 }

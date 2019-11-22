@@ -19,7 +19,7 @@
 <!-- Scripts-->
 <script>
         var usuario = localStorage.getItem("nombreUsuario");
-</script>
+    </script>
 </head>
 
 <body class="theme-green">
@@ -145,7 +145,7 @@
                                         <div class="form-group">
                                             <label for="cardNumber">Título</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="" placeholder="">
+                                                <input type="text" class="form-control" name="" placeholder="" id="titulo">
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
                                                 </div>
-                                                <input type="date" class="form-control" placeholder="" id="">
+                                                <input type="date" class="form-control" placeholder="" id="ffirma">
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
                                                 </div>
-                                                <input type="date" class="form-control" placeholder="" id="">
+                                                <input type="date" class="form-control" placeholder="" id="fvencimiento">
                                             </div>
                                         </div>
                                     </div>
@@ -189,12 +189,12 @@
                                                     <span class="input-group-text">$</span>
                                                 </div>
 
-                                                <input type="text" class="form-control" name="" placeholder="Soles o dólares" style="height: 38px;"">
+                                                <input type="text" class="form-control" name="" placeholder="Soles o dólares" style="height: 38px;" id="mfacturado">
                                                 
                                                 <div class="input-group-postpend">                                            
-                                                    <select class="form-control ">
-                                                        <option value="">PEN</option>
-                                                        <option value="">USD</option>
+                                                    <select class="form-control" id="tipomoneda">
+                                                        <option value="soles">PEN</option>
+                                                        <option value="dolares">USD</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -210,11 +210,11 @@
                                 <!---BOTONES-->
                                 <div class="row justify-content-center">
                                     <div class="col-md-4">
-                                        <button type="button" class="subscribe btn btn-success btn-block" onclick="">REGISTRAR</button>
+                                        <button type="button" class="subscribe btn btn-success btn-block" onclick="insertarFactura()">REGISTRAR</button>
                                     </div>
                                     <div class="col-md-4">
-                                            <button onclick="" class="subscribe btn btn-danger btn-block" type="button">CANCELAR</button>
-                                        </div>
+                                        <a href="lista-facturas.html"><button onclick="" class="subscribe btn btn-danger btn-block" type="button">CANCELAR</button></a>
+                                    </div>
                                 </div>
                                 <!--<div class="row justify-content-center">
                                     <div class="col-md-4">
@@ -244,6 +244,7 @@
 
 <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js --> 
 <script src="assets/js/pages/forms/basic-form-elements.js"></script>
-<script src="../scripts/pagar-registrar.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./scripts/nueva-factura.js"></script>
 </body>
 </html>
