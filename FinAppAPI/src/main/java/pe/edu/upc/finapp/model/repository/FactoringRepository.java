@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import pe.edu.upc.finapp.model.entity.CarteraFactura;
 import pe.edu.upc.finapp.model.entity.Factoring;
 import pe.edu.upc.finapp.model.entity.Usuario;
 
@@ -16,6 +17,6 @@ public interface FactoringRepository extends JpaRepository<Factoring, Integer>{
 	
 	@Query("SELECT f FROM Factoring f  WHERE f.ccarterafactura.ccarterafactura= :ccartera")
 	List<Factoring> fetchByCartera(Integer ccartera);
-	@Query("SELECT f FROM Factoring f, CarteraFactura c, Factura fa WHERE f.ccarterafactura.ccarterafactura = c.ccarterafactura AND fa.cfactura=f.cfactura.cfactura AND fa.cusuario.cusuario=?1" )
-	List<Factoring>fecthCarteraByUserId(Integer id);
+	@Query("SELECT c FROM Factoring f, CarteraFactura c, Factura fa WHERE f.ccarterafactura.ccarterafactura = c.ccarterafactura AND fa.cfactura=f.cfactura.cfactura AND fa.cusuario.cusuario=?1" )
+	List<CarteraFactura>fecthCarteraByUserId(Integer id);
 }

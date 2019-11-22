@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import pe.edu.upc.finapp.model.entity.CarteraFactura;
 import pe.edu.upc.finapp.model.entity.Factoring;
 import pe.edu.upc.finapp.model.entity.Factura;
 import pe.edu.upc.finapp.service.FactoringService;
@@ -150,12 +151,12 @@ public class FactoringRestController {
 	
 	@ApiOperation("Fetch carteras por user id")
 	@GetMapping(value="/cartera/usuario/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Factoring>> fecthByCarteraId(@PathVariable("id") Integer id){
+	public ResponseEntity<List<CarteraFactura>> fecthByCarteraId(@PathVariable("id") Integer id){
 		try {
-			List<Factoring> factorings = fctServ.fecthCarterasByUserId(id);
-			return new ResponseEntity<List<Factoring>>(factorings,HttpStatus.OK);
+			List<CarteraFactura> factorings = fctServ.fecthCarterasByUserId(id);
+			return new ResponseEntity<List<CarteraFactura>>(factorings,HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<List<Factoring>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<CarteraFactura>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pe.edu.upc.finapp.model.entity.CarteraFactura;
 import pe.edu.upc.finapp.model.entity.Factoring;
 import pe.edu.upc.finapp.model.repository.FactoringRepository;
 import pe.edu.upc.finapp.service.FactoringService;
@@ -60,7 +61,7 @@ public class FactoringServiceImpl implements FactoringService{
 	
 	@Transactional(readOnly = true)
 	@Override
-	public List<Factoring> fecthCarterasByUserId(Integer id) throws Exception {
+	public List<CarteraFactura> fecthCarterasByUserId(Integer id) throws Exception {
 		return factRepo.fecthCarteraByUserId(id);
 	}
 
