@@ -13,9 +13,13 @@ var gastosfin_id=[];
 var gastosfin_costo=[];
 //VARIABLES GLOBALES-SECUNDARIAS
 var form_costosiniciales;
+var form_costosfinales;
 var form_idcostos;
 var form_mcostos;
 var cont;
+var auxcont;
+var cont2;
+var auxcont2;
 
 function listar_facturas(){//MAIN
     var usuario = localStorage.getItem('idUsuario');
@@ -29,10 +33,14 @@ function listar_facturas(){//MAIN
     frec_origin=1;
     frec_capit=1;
     form_costosiniciales=document.getElementById('form_costosiniciales');
-    //form_costosiniciales.innerHTML='';
+    form_costosfinales=document.getElementById('form_costosfinales');
     cont=0;
+    cont2=0;
+    auxcont=0;
+    auxcont2=0;
 
     agregarCI();
+    agregarCF();
 
     fetch(ruta)
     .then(res => res.json())
@@ -175,8 +183,8 @@ function setFrecCapit(){
 function agregarCI(){
     form_costosiniciales.innerHTML+=`
     <div class="col-md-8" >
-        <select class="form-control" id="idcosto${cont}" onchange="setIDs()">
-            <option value="" disable selected>Gastos Iniciales</option>
+        <select class="form-control" id="idcosto${cont}" onchange="setIDs(${cont})">
+            <option value="" disabled selected>Gastos Iniciales</option>
             <option value="1">Portes</option>
             <option value="2">Fotocopias</option>
             <option value="3">Comisión de estudio</option>
@@ -194,6 +202,27 @@ function agregarCI(){
     </div>
     `;
     cont++;
+    auxcont++;
+}
+
+function agregarCF(){
+    form_costosfinales.innerHTML+=`
+    <div class="col-md-8">
+        <select class="form-control" id="idcostof${cont2}" onchange="setIDFs(${cont2})">
+            <option value="" disabled selected>Gastos Finales</option>
+            <option value="1">Portes</option>                                                
+            <option value="5">Gastos de administración</option>
+            <option value="8">Otros gastos</option>                                                
+        </select>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" id="mcostof${cont2}" placeholder="Valor en efectivo" style="height: 38px;">
+        </div>
+    </div>
+    `;
+    cont2++;
+    auxcont2++;
 }
 
 function setCI(){
@@ -208,10 +237,43 @@ function setCI(){
 
     console.log(gastosinit_costo);
     console.log(gastosinit_id);
-    /*var id=document.getElementById('idcosto'+String(e));
-    gastosinit_id.push(id.value);*/
 }
 
-function setIDs(){
-    
+function setCF(){
+    for(var i=0;i<cont2;i++){
+        var tempcostof=Number(document.getElementById('mcostof'+String(i)).value);
+        gastosfin_costo.push(Number(tempcostof.toFixed(2)));
+    }
+    var btn=document.getElementById('rg2');
+    btn.disabled=true;
+    btn=document.getElementById('agr2');
+    btn.disabled=true;
+
+    console.log(gastosfin_costo);
+    console.log(gastosfin_id);
+}
+
+function setIDs(e){
+    auxcont++;
+    if(auxcont-cont==1){
+        var selectid=document.getElementById('idcosto'+String(e));
+        gastosinit_id.push(Number(selectid.value));
+    }
+    else{
+        var selectid=document.getElementById('idcosto'+String(e));
+        gastosinit_id[Number(e)]=Number(selectid.value);
+    }  
+}
+
+function setIDFs(e){
+    auxcont2++;
+    if(auxcont2-cont2==1){
+        var selectid2=document.getElementById('idcostof'+String(e));
+        gastosfin_id.push(Number(selectid2.value));
+    }
+    else{
+        var selectid2=document.getElementById('idcostof'+String(e));
+        gastosfin_id[Number(e)]=Number(selectid2.value);
+        console.log(e);
+    }  
 }

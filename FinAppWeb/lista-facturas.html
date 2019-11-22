@@ -18,8 +18,8 @@
 <link  rel="stylesheet" href="assets/css/style.min.css">
 <!-- Scripts-->
 <script>
-    var usuario = localStorage.getItem("nombreUsuario");
-</script>
+        var usuario = localStorage.getItem("nombreUsuario");
+    </script>
 </head>
 
 <body class="theme-green">
@@ -81,7 +81,7 @@
 <aside id="leftsidebar" class="sidebar">
     <div class="navbar-brand">
         <button class="btn-menu ls-toggle-btn" type="button"><i class="zmdi zmdi-menu"></i></button>
-        <a href="index.html"><img src="assets/images/logo.svg" width="25" alt="Aero"><span class="m-l-10">Vida Plena</span></a>
+        <a href="index.html"><img src="assets/images/finapp_logo.png" width="25" alt="Aero"><span class="m-l-10">Fin App</span></a>
     </div>
     <div class="menu">
         <ul class="list">
@@ -91,15 +91,15 @@
                     <div class="detail">
                         <h4>
                             <script type="text/javascript">
-                                document.write(usuario);
+                                
                             </script>
                         </h4>
                     </div>
                 </div>
             </li>
-            <li><a href="my-profile.html"><i class="zmdi zmdi-account"></i><span>Mi Perfil</span></a></li>
-            <li><a href=""><i class="zmdi zmdi-card-travel"></i><span>Cartera de facturas</span></a></li>
+            <li><a href="my-profile.html"><i class="zmdi zmdi-account"></i><span>Mi Perfil</span></a></li>            
             <li><a href="lista-facturas.html"><i class="zmdi zmdi-file-text"></i><span>Mis Facturas</span></a></li>
+            <li><a href="lista-simulaciones.html"><i class="zmdi zmdi-settings-square"></i><span>Mis Simulaciones</span></a></li>
            
             <li>
                 <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
@@ -108,8 +108,7 @@
                 </a>
             
                 <ul class="ml-menu" style="display: block;">
-                    <li><a href="simulacion-factura.html" class=" waves-effect waves-block">Una Factura</a></li>
-                    <li><a href=".html" class=" waves-effect waves-block">Cartera de Facturas</a></li>
+                    <li><a href="simulacion-cartera.html" class=" waves-effect waves-block">Cartera de Facturas</a></li>
                 </ul>
             </li>
        
@@ -130,7 +129,7 @@
                     <h2>Mis Facturas</h2>
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-12">                
-                    <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>                                
+                    <button class="btn btn-success btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>                                
                     <a href="nueva-factura.html"><button style="height: 38px;" class="btn btn-success float-right" type="button">Nueva Factura</button></a> 
                 </div>
             </div>
@@ -151,10 +150,16 @@
                                         <td width="25%">
                                             <p class="font-weight-bold">Título de Factura 1</p>                                            
                                         </td>
-                                        <td width="38%">
+                                        <td width="10%">
                                             <div>
                                                 <p >$ monto </p>
                                             </div>                                                                            
+                                        </td>
+                                        <td width="18%">
+                                            <div class="col-md-6">
+                                                <button type="button" class="subscribe btn btn-warning btn-block"
+                                                    onclick="">SIMULAR</button>
+                                            </div>                                                                               
                                         </td>
                                     </tr>
                                     <tr>
@@ -164,10 +169,16 @@
                                             <td width="25%">
                                                 <p class="font-weight-bold">Título de Factura 1</p>                                            
                                             </td>
-                                            <td width="38%">
+                                            <td width="18%">
                                                 <div>
                                                     <p >$ monto </p>
                                                 </div>                                                                            
+                                            </td>
+                                            <td width="18%">
+                                                <div class="col-md-6">
+                                                    <button type="button" class="subscribe btn btn-warning btn-block"
+                                                        onclick="">SIMULAR</button>
+                                                </div>                                                                               
                                             </td>
                                         </tr>
                                 </tbody>

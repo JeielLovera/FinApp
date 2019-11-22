@@ -26,24 +26,22 @@
 
 <body class="theme-green">
 
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
+ <!-- Page Loader -->
+<div class="page-loader-wrapper">
         <div class="loader">
-            <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/loader.svg" width="48" height="48"
-                    alt="Aero"></div>
+            <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/loader.svg" width="60" height="60" alt="Aero"></div>
             <p>Cargando...</p>
         </div>
     </div>
-
+    
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
-
+    
     <!-- Right Icon menu Sidebar -->
     <div class="navbar-right">
         <ul class="navbar-nav">
             <li class="dropdown">
-                <a href="javascript:void(0);" class="dropdown-toggle" title="App" data-toggle="dropdown"
-                    role="button"><i class="zmdi zmdi-apps"></i></a>
+                <a href="javascript:void(0);" class="dropdown-toggle" title="App" data-toggle="dropdown" role="button"><i class="zmdi zmdi-apps"></i></a>
                 <ul class="dropdown-menu slideUp2">
                     <li class="header">App Shortcut</li>
                     <li class="body">
@@ -56,8 +54,7 @@
                             </li>
                             <li>
                                 <a href="index.html">
-                                    <div class="icon-circle mb-2 bg-purple"><i class="zmdi zmdi-account-calendar"></i>
-                                    </div>
+                                    <div class="icon-circle mb-2 bg-purple"><i class="zmdi zmdi-account-calendar"></i></div>
                                     <p class="mb-0">Contratos</p>
                                 </a>
                             </li>
@@ -77,18 +74,16 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="javascript:void(0);" class="js-right-sidebar" title="Setting"><i
-                        class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
+            <li><a href="javascript:void(0);" class="js-right-sidebar" title="Setting"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
             <li><a href="sign-in.html" class="mega-menu" title="Sign Out"><i class="zmdi zmdi-power"></i></a></li>
         </ul>
     </div>
-
+    
     <!-- Left Sidebar -->
     <aside id="leftsidebar" class="sidebar">
         <div class="navbar-brand">
             <button class="btn-menu ls-toggle-btn" type="button"><i class="zmdi zmdi-menu"></i></button>
-            <a href="index.html"><img src="assets/images/logo2.svg" width="25" alt="Aero"><span class="m-l-10">Fin
-                    App</span></a>
+            <a href="index.html"><img src="assets/images/finapp_logo.png" width="25" alt="Aero"><span class="m-l-10">Fin App</span></a>
         </div>
         <div class="menu">
             <ul class="list">
@@ -98,27 +93,30 @@
                         <div class="detail">
                             <h4>
                                 <script type="text/javascript">
-                                    document.write(usuario);
+                                    
                                 </script>
                             </h4>
                         </div>
                     </div>
                 </li>
-
-                <li><a href="my-profile.html"><i class="zmdi zmdi-account"></i><span>Mi Perfil</span></a></li>
-                <li><a href=""><i class="zmdi zmdi-card-travel"></i><span>Cartera de facturas</span></a></li>
-                <li><a href=""><i class="zmdi zmdi-file-text"></i><span>Mis Facturas</span></a></li>
+                <li><a href="my-profile.html"><i class="zmdi zmdi-account"></i><span>Mi Perfil</span></a></li>            
+                <li><a href="lista-facturas.html"><i class="zmdi zmdi-file-text"></i><span>Mis Facturas</span></a></li>
+                <li><a href="lista-simulaciones.html"><i class="zmdi zmdi-settings-square"></i><span>Mis Simulaciones</span></a></li>
+               
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
                         <i class="zmdi zmdi-settings-square"> </i>
                         <span>Simulaciones</span>
                     </a>
-
+                
                     <ul class="ml-menu" style="display: block;">
-                        <li><a href="simulacion-factura.html" class=" waves-effect waves-block">Una Factura</a></li>
                         <li><a href="simulacion-cartera.html" class=" waves-effect waves-block">Cartera de Facturas</a></li>
                     </ul>
                 </li>
+           
+            </ul>
+            </div>
+    
             </ul>
         </div>
     </aside>
@@ -254,7 +252,7 @@
                                     <!--COSTOS INICALES-->
                                     <h2 class="card-inside-title" style="font-size:130%; color:#04BE5B;" >Costos o Gastos inciales</h2>
                                     <div class="row" id="form_costosiniciales">
-                                                                            
+                                            <!--SELECT FUMADASO-->                                
                                     </div>
                                     
                                     <div class="row justify-content-end">
@@ -268,23 +266,15 @@
 
                                     <!--COSTOS FINALES-->
                                     <h2 class="card-inside-title" style="font-size:130%; color:#04BE5B;">Costos o Gastos finales</h2>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <select class="form-control ">
-                                                <option value="1">Portes</option>                                                
-                                                <option value="5">Gastos de administración</option>
-                                                <option value="8">Otros gastos</option>                                                
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="" placeholder="Valor en efectivo" style="height: 38px;">
-                                            </div>
-                                        </div>
+                                    <div class="row" id="form_costosfinales">
+                                        <!--SELECT FUMADASO-->  
                                     </div>
                                     <div class="row justify-content-end">
                                         <div class="col-md-3">
-                                            <button type="button" class="subscribe btn btn-dark btn-block" onclick="">Agregar</button>
+                                            <button type="button" id="rg2" class="subscribe btn btn-dark btn-block" onclick="setCF()">Registrar</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" id="agr2" class="subscribe btn btn-dark btn-block" onclick="agregarCF()">Agregar</button>
                                         </div>
                                     </div>
     
