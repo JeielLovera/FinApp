@@ -11,6 +11,7 @@ var gastosinit_id=[];
 var gastosinit_costo=[];
 var gastosfin_id=[];
 var gastosfin_costo=[];
+var listaFacts=[];
 //VARIABLES GLOBALES-SECUNDARIAS
 var form_costosiniciales;
 var form_costosfinales;
@@ -25,8 +26,7 @@ function listar_facturas(){//MAIN
     var usuario = localStorage.getItem('idUsuario');
 
     var ruta = 'http://localhost:8085/facturas/usuario/'+usuario;
-    var listar = document.getElementById("lista");
-
+    
     tipotasa=1;
     frec_origin=1;
     frec_capit=1;
@@ -43,19 +43,25 @@ function listar_facturas(){//MAIN
     fetch(ruta)
     .then(res => res.json())
     .then(fcts => {
-        for(let fct of fcts){
-            listar.insertAdjacentHTML("beforeend", `
-            <option value="${fct.cfactura}">${fct.ntitulofactura}</option>`)
-            localStorage.setItem('idFactura',Number(fct.cfactura));
-            localStorage.setItem('dvencimiento',fct.dvencimiento);
-            console.log("gaaaaaa");
-        }
+        listaFacts = fcts;
     })
     .catch(function(error)
     {
         console.log(error);
     });
     
+}
+
+function mostrarFacturas() {
+    var listar = document.getElementById("lista");
+    listar.innerHTML = '';
+
+    for(let fct of listaFacts){
+        listar.innerHTML += `
+        <option value="${fct.cfactura}">${fct.ntitulofactura}</option>`;
+        localStorage.setItem('idFactura',Number(fct.cfactura));
+        localStorage.setItem('dvencimiento',fct.dvencimiento);
+    }
 }
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
