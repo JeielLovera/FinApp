@@ -12,12 +12,25 @@ var totalMontoCostosFInales = 0;
 var facturas = [];
 var arrFacturas = [];
 var ultimaFactura = 0;
+var ultimoFactoring=0;
 var arrDVencimiento = [];
 var arrVNominal = [];
+var arrTCEA=[];
+var arrMEntregado=[];
+var arrMRecibido=[];
+var arrMDescuento=[];
+var arrMNeto=[];
+var arrFrecCap=[];
+var arrFrecTasa=[];
+var arrPDescuento=[];
+var arrPTasa=[];
+var arrPTcea=[];
+var ddescntTodos;
 
 //Variables globales para las funciones de agregar
 var numCostosIniciales = 0;
 var numCostosFinales = 0;
+
 
 //Función de carga
 function inicializar() {
@@ -82,7 +95,13 @@ function obtenerUltimaFactura() {
     .then(data => {
         ultimaFactura = data.data[data.data.length -1].cfactura;
         console.log(ultimaFactura);
-    })
+    }).catch(function(error){console.log(error);});
+
+    axios.ge(ritaGETFactorings)
+    .then(data => {
+        ultimoFactoring=data.data[data.data.length-1].cfactoring;
+        console.log(ultimoFactoring);
+    }).catch(function(error){console.log(error);});
 }
 
 //Funcion para agregar un campo de costo inicial
@@ -180,7 +199,12 @@ function simularCartera() {
     obtenerFacturasARegistrar();
     
     //Se calcula el Factoring
-    Calcular_Factoring();
+    for(var i=0;i<arrFacturas.length;i++){
+        Calcular_Factoring(i);
+    }
+    
+    //calculo de van y tir
+
 
     //Despues de ejecutar la simulación
     limpiarInputsCostos();
@@ -189,6 +213,62 @@ function simularCartera() {
 }
 
 function registrarCartera() {
+
+    var rutaCartera='http://localhost:8085/carterafacturas';
+    var rutaFactorings='http://localhost:8085/factorings';
+    var titulocartera=document.getElementById('titulofactoring').value;
+    var tbanco=document.getElementById('tbanco').value;
+
+    axios({
+        method: 'POST',
+        url: rutaCartera,
+        data: {
+            mtotarecibido: Number(0),
+            ncarterafactura: titulocartera,
+            pTir: Number(0),
+            ptotalTcea: Number(0)
+        }
+    })
+    .then( data => {
+        axios.get(rutaCartera)
+        .then(data =>{
+            for(var i=0;i<arrFacturas.length;i++){
+                crt=data.data[data.data.length-1];
+                axios({
+                    method: 'POST',
+                    url: rutaFactorings,
+                    data: {
+                        ccartera_factura: crt,
+                        cfactura:{
+                            cfactura: Number(arrFacturas[i])
+                        } ,
+                        ctipointeres:{
+                            ctipointeres: Number(arrTipoCostosIniciales[i])
+                        },
+                        ddescuento: ddescntTodos,
+                        mdescuento: Number(arrMDescuento[i]),
+                        mentregado: Number(arrMEntregado[i]),
+                        mneto: Number(arrMNeto[i]),
+                        mrecibido: Number(arrMRecibido[i]),
+                        nfactoring: titulocartera,
+                        numfrecuenciacapitalizacion: Number(arrFrecCap[i]),
+                        numfrecuenciatasaoriginal: Number(arrFrecTasa[i]),
+                        pdescuento: Number(arrPDescuento[i]),
+                        ptasaoriginal: Number(arrPTasa[i]),
+                        ptcea: Number(arrPTcea[i]),
+                        tbanco: tbanco
+                    }
+                })
+                .then(data => {
+                    guardarCostos();
+                })
+                .catch(function(error){console.log(error);});
+            }
+        }).catch(function(error){console.log(error);});
+    })
+    .then(data => {})
+    .catch(function(error){console.log(error);});
+
     //Despues de ejecutar el registro
     limpiarCostos();
     limpiarFacturas();
@@ -285,18 +365,12 @@ var td = 0;
 var frec_origin = 0;
 var tasa_origin = 0;
 var frec_capit = 0;
-var gastosinit_id=[];
-var gastosinit_costo=[];
-var gastosfin_id=[];
-var gastosfin_costo=[];
 var tetd = 0;
 var pdescuento = 0;
 var mdescuento = 0;
 var mneto = 0;
 var mrecibido = 0;
 var mentregado = 0;
-var mgastosiniciales = 0;
-var mgastosfinales = 0;
 var tcea = 0;
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
@@ -358,14 +432,14 @@ function Calcular_Factoring(indice){
     mneto=0;
     mrecibido=0;
     mentregado=0;
-    mgastosiniciales=0;
-    mgastosfinales=0;
+    totalMontoCostosFInales=0;
+    totalMontoCostosIniciales=0;
     tcea=0;
     
     ddescuento=$('#fdescuentoCartera').val();
-
+    ddescntTodos=ddescuento;
     var fecha1=moment(ddescuento);
-    var fecha2=moment(localStorage.getItem('dvencimiento'));
+    var fecha2=moment(arrDVencimiento[indice]);
     td=Number(fecha2.diff(fecha1,'days'))+1;//el +1 es porque por alguna razon de la bd viene con un dia de retraso gaaaaa
     tasa_origin=Number(document.getElementById('porcentajeTasa').value);
     tasa_origin=Number(tasa_origin.toFixed(7));
@@ -384,6 +458,7 @@ function Calcular_Factoring(indice){
     //CALCULO DATOS INTERMEDIOS
     if(tipotasa==1){
         tetd=convert_efectiva_efectiva(td,frec_origin,tasa_origin);
+        frec_capit=-1;
     }
     else{
         tetd=convert_nominal_efectiva(td,frec_origin,tasa_origin,frec_capit);
@@ -394,19 +469,19 @@ function Calcular_Factoring(indice){
     pdescuento=Number(pdescuento.toFixed(7));
 
     //CALCULO DATOS FINALES
-    mdescuento=calc_valor_descuento(Number(localStorage.getItem('vnominal')),Number(pdescuento));
+    mdescuento=calc_valor_descuento(Number(arrVNominal[indice]),Number(pdescuento));
     mdescuento=Number(mdescuento.toFixed(2));
-    mneto=calc_valor_neto(Number(localStorage.getItem('vnominal')),Number(mdescuento));
-    mgastosiniciales=0;
-    for(var i=0;i<cont;i++){
-        mgastosiniciales+=gastosinit_costo[i];
+    mneto=calc_valor_neto(Number(arrVNominal[indice]),Number(mdescuento));
+
+    for(var i=0;i<numCostosIniciales;i++){
+        totalMontoCostosIniciales+=arrValorCostosIniciales[i];
     }
-    mrecibido=calc_val_recibido(Number(mneto),Number(mgastosiniciales));
-    mgastosfinales=0;
-    for(var j=0;j<cont2;j++){
-        mgastosfinales+=gastosfin_costo[j];
+    mrecibido=calc_val_recibido(Number(mneto),Number(totalMontoCostosIniciales));
+
+    for(var j=0;j<numCostosFinales;j++){
+        totalCostosFInales+=arrValorCostosFinales[j];
     }
-    mentregado=calc_val_entregado(Number(localStorage.getItem('vnominal')),Number(mgastosfinales));
+    mentregado=calc_val_entregado(Number(arrVNominal[indice]),Number(totalCostosFInales));
     tcea=calc_tcea(mentregado,mrecibido,td);
     tcea=Number(tcea.toFixed(7));
 
@@ -422,6 +497,47 @@ function Calcular_Factoring(indice){
     console.log(mentregado);
     console.log(tcea);
 
-    limpiar_datos();
+    arrMDescuento.push(mdescuento);
+    arrMEntregado.push(mentregado);
+    arrMNeto.push(mneto);
+    arrMRecibido.push(mrecibido);
+    arrFrecCap.push(frec_capit);
+    arrFrecTasa.push(frec_origin);
+    arrPDescuento.push(pdescuento);
+    arrPTasa.push(tasa_origin);
+    arrPTcea.push(tcea);
 
+}
+
+function guardarCostos(){
+    var rutaCostos='http://localhost:8085/gasto_factorings';
+    for(var i=0;i<arrFacturas.length;i++){
+        for(var j=0;j<numCostosIniciales;j++){
+            axios({
+                method:'POST',
+                url: rutaCostos,
+                data:{
+                    cfactoring:Number(ultimoFactoring+i+1),
+                    cgasto:{
+                        cgasto:Number(arrTipoCostosIniciales[j])
+                    },
+                    ftipogasto: true,
+                    mgasto: Number(arrValorCostosIniciales[j])
+                }
+            }).then(data => {}).catch(function(error){console.log(error);});
+
+            axios({
+                method:'POST',
+                url: rutaCostos,
+                data:{
+                    cfactoring:Number(ultimoFactoring+i+1),
+                    cgasto:{
+                        cgasto:Number(arrTipoCostosFinales[j])
+                    },
+                    ftipogasto: true,
+                    mgasto: Number(arrValorCostosFinales[j])
+                }
+            }).then(data => {}).catch(function(error){console.log(error);});
+        }
+    }
 }

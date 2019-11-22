@@ -337,14 +337,24 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" name="" placeholder="Título de la simulación" style="height: 38px;">
+                                            <input type="text" class="form-control" id="titulofactoring" placeholder="Título de la simulación" style="height: 38px;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Banco
+                                                <span style="font-size:80%"> (si desea guardar la simulación)</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="tbanco" placeholder="Banco" style="height: 38px;">
                                         </div>
                                     </div>
                                     
                                     <!---BOTONES GUARDAR-->
                                     <div class="row justify-content-center">
                                         <div class="col-md-4">
-                                            <button type="button" class="subscribe btn btn-success btn-block" onclick="">GUARDAR SIMULACIÓN</button>
+                                            <button type="button" class="subscribe btn btn-success btn-block" onclick="registrarCartera()">GUARDAR SIMULACIÓN</button>
                                         </div>
                                         <div class="col-md-4">
                                             <button onclick="" class="btn btn-outline-danger btn-block" type="button">CANCELAR</button>
