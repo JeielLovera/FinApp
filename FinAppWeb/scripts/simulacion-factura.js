@@ -33,8 +33,8 @@ var auxcont2;
 
 function main(){//MAIN
 
-    localStorage.setItem('idFactura',Number(3));
-    var ruta='http://localhost:8085/facturas/'+localStorage.getItem('idFactura');
+    var ruta='http://localhost:8085/facturas/'+localStorage.getItem('seleccionFactura');
+    var seccionCapitalizacion = document.getElementById('seccionCapitalizacion');
 
     tipotasa=1;
     frec_origin=1;
@@ -65,6 +65,7 @@ function main(){//MAIN
         localStorage.setItem('idFactura',Number(fct.cfactura));
         localStorage.setItem('dvencimiento',fct.dvencimiento);
         localStorage.setItem('vnominal',Number(fct.mvalornominal));
+        localStorage.setItem('moneda',fct.ttipomoneda);
         var titulo=document.getElementById('titulofactura');
         titulo.innerHTML='';
         titulo.innerHTML+=`<label for="">${fct.ntitulofactura}</label>`;  
@@ -73,7 +74,17 @@ function main(){//MAIN
     {
         console.log(error);
     });
-    
+
+    var fdescuentoCartera = document.getElementById('ddescuento');
+    var fechaHoy = new Date();
+
+    var anio = fechaHoy.toLocaleString().split(' ')[0].split('/')[2];
+    var mes = fechaHoy.toLocaleString().split(' ')[0].split('/')[1];
+    var dia = fechaHoy.toLocaleString().split(' ')[0].split('/')[0];
+
+    fdescuentoCartera.value = anio+'-'+mes+'-'+dia;
+
+    seccionCapitalizacion.hidden = true;
 }
 
 function convert_efectiva_efectiva(td,frec_origin,tasa_origin){
@@ -161,6 +172,7 @@ function Calcular_Factoring(){
     //CALCULO DATOS INTERMEDIOS
     if(tipotasa==1){
         tetd=convert_efectiva_efectiva(td,frec_origin,tasa_origin);
+        frec_capit=-1;
     }
     else{
         tetd=convert_nominal_efectiva(td,frec_origin,tasa_origin,frec_capit);
@@ -195,9 +207,24 @@ function Calcular_Factoring(){
     console.log(mdescuento);
     console.log(mneto);
     console.log(mrecibido);
-    console.log(mgastosfinales);
     console.log(mentregado);
     console.log(tcea);
+
+    var divdescuento=document.getElementById('divdescuento');
+    divdescuento.innerHTML='';
+    divdescuento.innerHTML+=`<p align="left">${mdescuento} ${localStorage.getItem('moneda')}</p>`;
+    var divneto=document.getElementById('divneto');
+    divneto.innerHTML='';
+    divneto.innerHTML+=`<p align="left">${mneto} ${localStorage.getItem('moneda')}</p>`;
+    var divrecibido=document.getElementById('divrecibido');
+    divrecibido.innerHTML='';
+    divrecibido.innerHTML+=`<p align="left">${mrecibido} ${localStorage.getItem('moneda')}</p>`;
+    var diventregado=document.getElementById('diventregado');
+    diventregado.innerHTML='';
+    diventregado.innerHTML+=`<p align="left">${mentregado} ${localStorage.getItem('moneda')}</p>`;
+    var divtcea=document.getElementById('divtcea');
+    divtcea.innerHTML='';
+    divtcea.innerHTML+=`<p align="left">${tcea} %</p>`;
 
     limpiar_datos();
 
@@ -219,7 +246,7 @@ function setFrecCapit(){
 }
 
 function agregarCI(){
-    form_costosiniciales.innerHTML+=`
+    form_costosiniciales.insertAdjacentHTML("beforeend", `
     <div class="col-md-8" >
         <select class="form-control" id="idcosto${cont}" onchange="setIDs(${cont})">
             <option value="" disabled selected>Gastos Iniciales</option>
@@ -238,13 +265,13 @@ function agregarCI(){
             <input type="text" class="form-control" id="mcosto${cont}" placeholder="Valor en efectivo" style="height: 38px;">
         </div>
     </div>
-    `;
+    `);
     cont++;
     auxcont++;
 }
 
 function agregarCF(){
-    form_costosfinales.innerHTML+=`
+    form_costosfinales.insertAdjacentHTML("beforeend", `
     <div class="col-md-8">
         <select class="form-control" id="idcostof${cont2}" onchange="setIDFs(${cont2})">
             <option value="" disabled selected>Gastos Finales</option>
@@ -258,7 +285,7 @@ function agregarCF(){
             <input type="text" class="form-control" id="mcostof${cont2}" placeholder="Valor en efectivo" style="height: 38px;">
         </div>
     </div>
-    `;
+    `);
     cont2++;
     auxcont2++;
 }
@@ -313,37 +340,110 @@ function setIDFs(e){
 function limpiar_datos(){
     form_costosiniciales.innerHTML='';
     form_costosfinales.innerHTML='';
-
-    for(var i=0;i<cont;i++){
-        //gastosinit_costo.pop();
-        gastosinit_id.pop();
-    }
-    for(var i=0;i<cont;i++){
-        gastosinit_costo.pop();
-        //gastosinit_id.pop();
-    }
-    for(var j=0;j<cont2;j++){
-        //gastosfin_costo.pop();
-        gastosfin_id.pop();
-    }
-    for(var j=0;j<cont2;j++){
-        gastosfin_costo.pop();
-        //gastosfin_id.pop();
-    }
-
-    /*gastosinit_costo=[];
-    gastosinit_id=[];
-    gastosfin_costo=[]
-    gastosfin_id=[];*/
-
-
-
-    var btn=document.getElementById('rg');
-    btn.disabled=false;
-    btn=document.getElementById('agr');
-    btn.disabled=false;
-    var btn=document.getElementById('rg2');
-    btn.disabled=false;
-    btn=document.getElementById('agr2');
-    btn.disabled=false;
 }
+
+function registrar_factoring(){
+    var titulofactoring=document.getElementById('titulofactoring').value;
+    var tbanco=document.getElementById('tbanco').value;
+    var ruta='http://localhost:8085/factorings';
+
+    axios({
+        method:'POST',
+        url:ruta,
+        data:{
+            ccartera_factura: null,
+            cfactura:{
+                cfactura: Number(localStorage.getItem('idFactura'))
+            } ,
+            ctipointeres:{
+                ctipointeres: Number(tipotasa)
+            },
+            ddescuento: ddescuento,
+            mdescuento: Number(mdescuento),
+            mentregado: Number(mentregado),
+            mneto: Number(mneto),
+            mrecibido: Number(mrecibido),
+            nfactoring: titulofactoring,
+            numfrecuenciacapitalizacion: Number(frec_capit),
+            numfrecuenciatasaoriginal: Number(frec_origin),
+            pdescuento: Number(pdescuento),
+            ptasaoriginal: Number(tasa_origin),
+            ptcea: Number(tcea),
+            tbanco: tbanco
+        }
+    })
+    .then(data => {
+        var fct=[];
+        var ruta2='http://localhost:8085/factorings';
+        axios.get(ruta2)
+        .then(data => {
+            for(var i=0;i<cont;i++){
+                var ruta3='http://localhost:8085/gasto_factorings';
+                fct=data.data[data.data.length-1];
+                axios({
+                    method:'POST',
+                    url: ruta3,
+                    data:{
+                        cfactoring:fct,
+                        cgasto:{
+                            cgasto:Number(gastosinit_id[i])
+                        },
+                        ftipogasto: true,
+                        mgasto: Number(gastosinit_costo[i])
+                    }
+                }).then(data => {}).catch(function(error){console.log(error);});
+            }
+        })
+        .catch(function(error){console.log(error);});
+    })
+    .then(data => {
+        var fct=[];
+        var ruta2='http://localhost:8085/factorings';
+        axios.get(ruta2)
+        .then(data => {
+            for(var i=0;i<cont2;i++){
+                var ruta3='http://localhost:8085/gasto_factorings';
+                fct=data.data[data.data.length-1];
+                axios({
+                    method:'POST',
+                    url: ruta3,
+                    data:{
+                        cfactoring:fct,
+                        cgasto:{
+                            cgasto:Number(gastosfin_id[i])
+                        },
+                        ftipogasto: false,
+                        mgasto: Number(gastosfin_costo[i])
+                    }
+                }).then(data => { }).catch(function(error){console.log(error);});
+            }
+        })
+        .catch(function(error){console.log(error);});
+    })
+    .then(data => {
+    })
+    .catch(function(error){console.log(error);});
+
+    window.location="./lista-facturas.html";
+
+}
+
+function cancelar(){
+    window.location="./lista-facturas.html";
+}
+
+//Variables globales para los listener
+var tipoTasa = document.getElementById('tipotasa');
+var seccionCapitalizacion = document.getElementById('seccionCapitalizacion');
+
+//LISTENER POR SI CAMBIA EL TIPO DE TASA
+tipoTasa.addEventListener('change', (e) => {
+    if(tipoTasa.value == 1)
+    {
+        seccionCapitalizacion.hidden = true;
+    }
+    else
+    {
+        seccionCapitalizacion.hidden = false;
+    }
+})

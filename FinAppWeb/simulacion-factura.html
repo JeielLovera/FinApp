@@ -93,7 +93,7 @@
                         <div class="detail">
                             <h4>
                                 <script type="text/javascript">
-                                    
+                                    document.write(usuario);
                                 </script>
                             </h4>
                         </div>
@@ -227,7 +227,7 @@
                                     </div>
                                     <p></p>
                                         <!--CAPITALIZACION debe aparecer solo cuando es nominal-->
-                                    <div class="row">
+                                    <div class="row" id="seccionCapitalizacion">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Capitalización</label>
@@ -296,40 +296,40 @@
                                             <div class="col-md-4">
                                                 <label>Descuento</label>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p align="left">$descuento</p>
+                                            <div class="col-md-3" id="divdescuento">
+
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Valor Neto</label>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p align="left">$valorneto</p>
+                                            <div class="col-md-3" id="divneto">
+
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Valor Recibido</label>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p align="left">$valor recibido</p>
+                                            <div class="col-md-3" id="divrecibido">
+
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Valor Entregado</label>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p align="left">$valor entregado</p>
+                                            <div class="col-md-3" id="diventregado">
+
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>TCEA</label>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p align="left">tcea%</p>
+                                            <div class="col-md-3" id="divtcea">
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -339,7 +339,17 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="" placeholder="Título de la simulación" style="height: 38px;">
+                                                <input type="text" class="form-control" id="titulofactoring" placeholder="Título de la simulación" style="height: 38px;">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Banco
+                                                    <span style="font-size:80%"> (si desea guardar la simulación)</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" id="tbanco" placeholder="Banco" style="height: 38px;">
                                             </div>
                                         </div>
 
@@ -347,10 +357,10 @@
                                         <div class="row justify-content-center">
                                             <div class="col-md-4">
                                                 <button type="button" class="subscribe btn btn-success btn-block"
-                                                    onclick="">GUARDAR SIMULACIÓN</button>
+                                                    onclick="registrar_factoring()">GUARDAR SIMULACIÓN</button>
                                             </div>   
                                             <div class="col-md-4">
-                                                <button onclick="" class="subscribe btn btn-danger btn-block" type="button">CANCELAR</button>
+                                                <button onclick="cancelar()" class="subscribe btn btn-danger btn-block" type="button">CANCELAR</button>
                                             </div>
                                         </div> 
                                 </form>    
@@ -373,6 +383,7 @@
     <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
     <script src="assets/js/pages/forms/basic-form-elements.js"></script>
     <script src="../scripts/simulacion-factura.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
