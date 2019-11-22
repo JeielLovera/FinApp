@@ -54,4 +54,5 @@ function listarFacturas () {
 
 function seleccionarFactura(cfactura) {
     localStorage.setItem('seleccionFactura', cfactura);
+    window.location="./simulacion-cartera.html";
 }
