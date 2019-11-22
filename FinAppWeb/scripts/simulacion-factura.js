@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", listar_facturas, false);
+document.addEventListener("DOMContentLoaded", main, false);
 
 //VARIABLES GLOBALES-PRINCIPALES
 var tipotasa;
@@ -11,6 +11,16 @@ var gastosinit_id=[];
 var gastosinit_costo=[];
 var gastosfin_id=[];
 var gastosfin_costo=[];
+var tetd;
+var pdescuento;
+var mdescuento;
+var mneto;
+var mrecibido;
+var mentregado;
+var mgastosiniciales;
+var mgastosfinales;
+var tcea;
+
 //VARIABLES GLOBALES-SECUNDARIAS
 var form_costosiniciales;
 var form_costosfinales;
@@ -21,13 +31,10 @@ var auxcont;
 var cont2;
 var auxcont2;
 
-function listar_facturas(){//MAIN
-    var usuario = localStorage.getItem('idUsuario');
+function main(){//MAIN
 
-    var ruta = 'http://localhost:8085/facturas/usuario/'+usuario;
-    var listar=document.getElementById("lista");
-    //listar.innerHTML='';
-
+    localStorage.setItem('idFactura',Number(3));
+    var ruta='http://localhost:8085/facturas/'+localStorage.getItem('idFactura');
 
     tipotasa=1;
     frec_origin=1;
@@ -39,20 +46,26 @@ function listar_facturas(){//MAIN
     auxcont=0;
     auxcont2=0;
 
+    tetd=0;
+    pdescuento=0;
+    mdescuento=0;
+    mneto=0;
+    mrecibido=0;
+    mentregado=0;
+    mgastosiniciales=0;
+    mgastosfinales=0;
+    tcea=0;
+
     agregarCI();
     agregarCF();
 
     fetch(ruta)
     .then(res => res.json())
-    .then(fcts => {
-
-        for(let fct of fcts){
-            //CTMCTMCTMCTMCT
-            localStorage.setItem('idFactura',Number(fct.cfactura));
-            localStorage.setItem('dvencimiento',fct.dvencimiento);
-            
-        }
-    }).then(data=>{console.log(localStorage.getItem('dvencimiento'));})///borrarluego
+    .then(fct => {
+        localStorage.setItem('idFactura',Number(fct.cfactura));
+        localStorage.setItem('dvencimiento',fct.dvencimiento);
+        localStorage.setItem('vnominal',Number(fct.mvalornominal));   
+    })
     .catch(function(error)
     {
         console.log(error);
@@ -90,19 +103,19 @@ function calc_valor_descuento(vnominal,pdescuento){
 
 function calc_valor_neto(vnominal,mdescuento){
     var vneto;
-    vneto=vnominal-mdescuento;
-    return 
+    vneto=Number(vnominal)-Number(mdescuento);
+    return vneto;
 }
 
 function calc_val_recibido(mneto,mgastosinit){
     var mrecibido;
-    mrecibido=mneto-mgastosinit;
+    mrecibido=Number(mneto)-Number(mgastosinit);
     return mrecibido;
 }
 
 function calc_val_entregado(vnominal,mgastosfin){
     var mentregado;
-    mentregado=vnominal+mgastosfin;
+    mentregado=Number(vnominal)+Number(mgastosfin);
     return mentregado;
 }
 
@@ -113,16 +126,15 @@ function calc_tcea(mentregado,mrecibido,td){
 }
 
 function Calcular_Factoring(){
-    //var fecha1=moment(fct.cfactura.ddescuento);
-    //var fecha2=moment(fct.cfactura.dvencimiento);
-    //var td=fecha2.diff(fecha1,'days');
-    var tetd;
-    var pdescuento;
-    var mdescuento;
-    var mneto;
-    var mrecibido;
-
-
+    tetd=0;
+    pdescuento=0;
+    mdescuento=0;
+    mneto=0;
+    mrecibido=0;
+    mentregado=0;
+    mgastosiniciales=0;
+    mgastosfinales=0;
+    tcea=0;
 
     ddescuento=$('#ddescuento').val();
 
@@ -138,30 +150,54 @@ function Calcular_Factoring(){
     console.log(frec_origin);
     console.log(frec_capit);
     console.log(tasa_origin);
+    console.log(gastosinit_id);
+    console.log(gastosinit_costo);
+    console.log(gastosfin_id);
+    console.log(gastosfin_costo);
 
-    /*var selectedtasa=document.getElementById('tipotasa');
-    selectedtasa.addEventListener('change',function(){
-        var tipotasa=this.options[selectedtasa.selectedIndex];
-        console.log(tipotasa.text);
-        console.log("aea");
-    });*/
-/*
     //CALCULO DATOS INTERMEDIOS
-    if(fct.ctipointeres.ctipointeres==1){
+    if(tipotasa==1){
         tetd=convert_efectiva_efectiva(td,frec_origin,tasa_origin);
     }
     else{
         tetd=convert_nominal_efectiva(td,frec_origin,tasa_origin,frec_capit);
     }
 
+    tetd=Number(tetd.toFixed(7));
     pdescuento=calc_porcentaje_descuento(tetd);
     pdescuento=Number(pdescuento.toFixed(7));
 
     //CALCULO DATOS FINALES
-    mdescuento=calc_valor_descuento(vnominal,pdescuento);
+    mdescuento=calc_valor_descuento(Number(localStorage.getItem('vnominal')),Number(pdescuento));
     mdescuento=Number(mdescuento.toFixed(2));
-    mneto=calc_valor_neto(vnominal,mdescuento);
-    mrecibido=calc_val_recibido(mneto,mgastosinit);*/
+    mneto=calc_valor_neto(Number(localStorage.getItem('vnominal')),Number(mdescuento));
+    mgastosiniciales=0;
+    for(var i=0;i<cont;i++){
+        mgastosiniciales+=gastosinit_costo[i];
+    }
+    mrecibido=calc_val_recibido(Number(mneto),Number(mgastosiniciales));
+    mgastosfinales=0;
+    for(var j=0;j<cont2;j++){
+        mgastosfinales+=gastosfin_costo[j];
+    }
+    mentregado=calc_val_entregado(Number(localStorage.getItem('vnominal')),Number(mgastosfinales));
+    tcea=calc_tcea(mentregado,mrecibido,td);
+    tcea=Number(tcea.toFixed(7));
+
+    console.log("calculos desde aqui");
+    console.log("cont",cont);
+    console.log("cont2",cont2);
+    console.log(tetd);
+    console.log(pdescuento);
+    console.log(mdescuento);
+    console.log(mneto);
+    console.log(mrecibido);
+    //console.log(mgastosfinales);
+    console.log(mentregado);
+    console.log(tcea);
+
+
+
 
 }
 
@@ -234,9 +270,6 @@ function setCI(){
     btn.disabled=true;
     btn=document.getElementById('agr');
     btn.disabled=true;
-
-    console.log(gastosinit_costo);
-    console.log(gastosinit_id);
 }
 
 function setCF(){
@@ -249,8 +282,6 @@ function setCF(){
     btn=document.getElementById('agr2');
     btn.disabled=true;
 
-    console.log(gastosfin_costo);
-    console.log(gastosfin_id);
 }
 
 function setIDs(e){
@@ -274,6 +305,5 @@ function setIDFs(e){
     else{
         var selectid2=document.getElementById('idcostof'+String(e));
         gastosfin_id[Number(e)]=Number(selectid2.value);
-        console.log(e);
     }  
 }
