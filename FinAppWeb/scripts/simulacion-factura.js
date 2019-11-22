@@ -25,9 +25,7 @@ function listar_facturas(){//MAIN
     var usuario = localStorage.getItem('idUsuario');
 
     var ruta = 'http://localhost:8085/facturas/usuario/'+usuario;
-    var listar=document.getElementById("lista");
-    //listar.innerHTML='';
-
+    var listar = document.getElementById("lista");
 
     tipotasa=1;
     frec_origin=1;
@@ -45,14 +43,14 @@ function listar_facturas(){//MAIN
     fetch(ruta)
     .then(res => res.json())
     .then(fcts => {
-
         for(let fct of fcts){
-            //CTMCTMCTMCTMCT
+            listar.insertAdjacentHTML("beforeend", `
+            <option value="${fct.cfactura}">${fct.ntitulofactura}</option>`)
             localStorage.setItem('idFactura',Number(fct.cfactura));
             localStorage.setItem('dvencimiento',fct.dvencimiento);
-            
+            console.log("gaaaaaa");
         }
-    }).then(data=>{console.log(localStorage.getItem('dvencimiento'));})///borrarluego
+    })
     .catch(function(error)
     {
         console.log(error);
