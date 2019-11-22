@@ -20,6 +20,7 @@ var mentregado;
 var mgastosiniciales;
 var mgastosfinales;
 var tcea;
+var listaFacts=[];
 
 //VARIABLES GLOBALES-SECUNDARIAS
 var form_costosiniciales;
@@ -58,6 +59,7 @@ function main(){//MAIN
 
     agregarCI();
     agregarCF();
+    mostrarFacturas();
 
     fetch(ruta)
     .then(res => res.json())
