@@ -52,5 +52,10 @@ public class FactoringServiceImpl implements FactoringService{
 	public void deleteAll() throws Exception {
 		factRepo.deleteAll();
 	}
+	@Transactional(readOnly = true)
+	@Override
+	public List<Factoring> fetchByUserId(Integer id) throws Exception {
+		return factRepo.fetchByUserId(id);
+	}
 
 }
